@@ -1,0 +1,790 @@
+!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jashwanth & Sindhu Wedding Invitation</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@600;700;900&family=Great+Vibes&family=Marcellus&family=Mandali&family=Noto+Sans+Telugu:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        royal: {
+                            800: '#580A14',
+                            900: '#3D0007',
+                        },
+                        maroon: {
+                            600: '#900C3F',
+                            700: '#720932',
+                            800: '#500522',
+                        },
+                        gold: {
+                            300: '#F3E5AB',
+                            400: '#E6CA65',
+                            500: '#D4AF37',
+                            600: '#AA820A',
+                            700: '#856404'
+                        },
+                        cream: '#FFFDF9',
+                        ivory: '#FAF4EB'
+                    },
+                    fontFamily: {
+                        serif: ['Marcellus', 'serif'],
+                        title: ['Cinzel Decorative', 'serif'],
+                        script: ['Great Vibes', 'cursive'],
+                        telugu: ['Noto Sans Telugu', 'Mandali', 'sans-serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Scrollbar & Utility Animations */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #3D0007;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D4AF37;
+            border-radius: 3px;
+        }
+
+        /* Gold Foil Gradient Text */
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #BF953F 0%, #FCF6BA 25%, #B38728 50%, #FBF5B7 75%, #AA771C 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Falling Petals Effect Canvas */
+        #petals-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 20;
+        }
+
+        /* Glassmorphism background */
+        .glass-royal {
+            background: rgba(61, 0, 7, 0.88);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(212, 175, 55, 0.35);
+        }
+
+        .glass-card {
+            background: rgba(255, 253, 249, 0.96);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(212, 175, 55, 0.4);
+        }
+
+        @keyframes rotateMandala {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .spin-slow {
+            animation: rotateMandala 60s linear infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.05); opacity: 1; }
+        }
+        .pulse-btn {
+            animation: pulseGlow 2s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-royal-900 text-slate-800 font-sans antialiased relative selection:bg-gold-500 selection:text-royal-900 min-h-screen overflow-x-hidden">
+
+    <!-- CANVAS FOR FALLING PETALS & GOLD GLITTER -->
+    <canvas id="petals-canvas"></canvas>
+
+    <!-- HIDDEN YOUTUBE PLAYER CONTAINER -->
+    <div class="fixed top-0 left-0 w-1 h-1 opacity-0 pointer-events-none -z-50 overflow-hidden">
+        <div id="youtube-player"></div>
+    </div>
+
+    <!-- INITIAL ENTRY / AUTOPLAY OVERLAY MODAL -->
+    <div id="welcomeOverlay" class="fixed inset-0 z-50 flex items-center justify-center bg-royal-900/95 backdrop-blur-xl transition-opacity duration-700 p-4">
+        <div class="text-center max-w-md mx-auto glass-royal p-8 sm:p-10 rounded-3xl border-2 border-gold-500/80 shadow-2xl space-y-6">
+            <div class="w-20 h-20 mx-auto rounded-full bg-gold-500/10 border border-gold-400 flex items-center justify-center text-gold-400 text-3xl shadow-lg">
+                <i class="fas fa-om"></i>
+            </div>
+
+            <div>
+                <span class="text-gold-400 font-serif text-sm tracking-widest uppercase block mb-1">Wedding Invitation</span>
+                <h2 class="font-title text-2xl sm:text-3xl text-gold-300 font-bold">Jashwanth & Sindhu</h2>
+                <p class="text-xs text-slate-300 mt-2 font-serif italic">"Two Hearts, One Journey — November 15, 2026"</p>
+            </div>
+
+            <div class="pt-2">
+                <button onclick="enterInvitation()" class="pulse-btn w-full bg-gradient-to-r from-gold-600 via-gold-500 to-gold-600 hover:from-gold-500 hover:to-gold-400 text-royal-900 font-bold py-3.5 px-8 rounded-full shadow-2xl text-sm sm:text-base tracking-wider uppercase flex items-center justify-center gap-3 transition-all">
+                    <i class="fas fa-envelope-open-text text-lg"></i>
+                    Open Invitation
+                </button>
+                <p class="text-[11px] text-gold-400/80 mt-3"><i class="fas fa-music mr-1"></i> Plays "Jashn-E-Bahaaraa Flute" background melody</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- FLOATING CONTROLS BAR (MUSIC & LANGUAGE) -->
+    <div class="fixed top-4 right-4 z-40 flex items-center gap-2 sm:gap-3">
+        <!-- YouTube Music Toggle Button -->
+        <button id="musicToggle" onclick="toggleMusic()" class="flex items-center gap-2 bg-royal-800/90 text-gold-400 border border-gold-500/60 px-3.5 py-2 rounded-full shadow-xl hover:bg-gold-500 hover:text-royal-900 transition-all duration-300 text-xs sm:text-sm font-medium backdrop-blur-md">
+            <i id="musicIcon" class="fas fa-music text-gold-400"></i>
+            <span id="musicText" class="hidden sm:inline">Jashn-E-Bahaaraa Flute 🎵</span>
+            <span id="musicTextMobile" class="sm:hidden">🎵</span>
+        </button>
+
+        <!-- Language Toggle Button -->
+        <button onclick="toggleLanguage()" class="flex items-center gap-2 bg-gold-500 text-royal-900 border border-gold-400 px-3.5 py-2 rounded-full shadow-xl hover:bg-gold-400 font-semibold transition-all duration-300 text-xs sm:text-sm">
+            <i class="fas fa-language"></i>
+            <span id="langBtnText">తెలుగు</span>
+        </button>
+    </div>
+
+    <!-- MAIN INVITATION CONTAINER -->
+    <main class="max-w-4xl mx-auto px-4 py-8 sm:py-12 relative z-10">
+
+        <!-- HEADER / TRADITIONAL MANTRAS SECTION -->
+        <header class="text-center mb-8 sm:mb-12">
+            <!-- Decorative Mandala Watermark -->
+            <div class="relative flex justify-center items-center mb-4">
+                <svg class="w-36 h-36 sm:w-48 sm:h-48 text-gold-500/20 spin-slow absolute -z-10" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="2,2"/>
+                    <circle cx="50" cy="50" r="35" fill="none" stroke="currentColor" stroke-width="1"/>
+                    <path d="M50 5 L55 25 L75 25 L60 38 L65 58 L50 45 L35 58 L40 38 L25 25 L45 25 Z" fill="none" stroke="currentColor" stroke-width="1"/>
+                    <path d="M50 5 L50 95 M5 50 L95 50 M18 18 L82 82 M18 82 L82 18" stroke="currentColor" stroke-width="0.5" stroke-dasharray="1,2"/>
+                </svg>
+
+                <div class="text-center pt-4">
+                    <div class="inline-block p-2 rounded-full bg-gold-500/10 border border-gold-500/30 mb-2">
+                        <span class="text-2xl sm:text-3xl text-gold-400">𑁍</span>
+                    </div>
+                    <h2 class="font-serif text-gold-400 text-base sm:text-2xl tracking-widest uppercase font-semibold">
+                        <span lang-en>Srirasthu • Shubhamasthu • Avighnamasthu</span>
+                        <span lang-te class="font-telugu hidden">శ్రీరస్తు • శుభమస్తు • అవిఘ్నమస్తు</span>
+                    </h2>
+                </div>
+            </div>
+
+            <!-- Traditional Sanskrit Shlokam Card -->
+            <div class="glass-royal rounded-2xl p-4 sm:p-6 my-6 shadow-2xl border border-gold-500/40 text-center max-w-2xl mx-auto">
+                <p class="text-gold-300 font-serif text-sm sm:text-base leading-relaxed tracking-wide italic">
+                    " శ్లో॥ ఆదిత్యాది గ్రహస్సర్వే స్వనక్షత్ర స్వరాశయః | <br class="hidden sm:inline">
+                    కుర్వంతు మంగళం తాభ్యాం యయౌరుద్వాహ పత్రికాః ॥ "
+                </p>
+                <div class="w-24 h-0.5 bg-gradient-to-r from-transparent via-gold-500 to-transparent mx-auto my-3"></div>
+                <p class="text-gold-400/80 text-xs sm:text-sm font-sans">
+                    <span lang-en>Seeking divine blessings of all heavenly bodies for an auspicious, harmonious union.</span>
+                    <span lang-te class="font-telugu hidden">నవదంపతులకు గ్రహానుకూలత మరియు సమస్త మంగళములు కలగాలని ఆకాంక్షిస్తూ...</span>
+                </p>
+            </div>
+        </header>
+
+        <!-- MAIN WEDDING INVITATION CARD -->
+        <section class="glass-card rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden border-2 border-gold-500/60 mb-12">
+            <!-- Corner Decorative Borders -->
+            <div class="absolute top-2 left-2 text-gold-600 text-2xl sm:text-3xl">╔</div>
+            <div class="absolute top-2 right-2 text-gold-600 text-2xl sm:text-3xl">╗</div>
+            <div class="absolute bottom-2 left-2 text-gold-600 text-2xl sm:text-3xl">╚</div>
+            <div class="absolute bottom-2 right-2 text-gold-600 text-2xl sm:text-3xl">╝</div>
+
+            <!-- Invitation Greeting -->
+            <div class="text-center space-y-3 mb-8">
+                <p class="text-maroon-700 font-serif uppercase tracking-widest text-xs sm:text-sm font-bold">
+                    <span lang-en>With immense joy and the blessings of the Almighty
+
+</span>
+                    <span lang-te class="font-telugu hidden">రామపోగు వారి వివాహ మహోత్సవ ఆహ్వాన శుభపత్రిక</span>
+                </p>
+                <h1 class="font-serif text-2xl sm:text-3xl text-royal-900 font-bold">
+                    <span lang-en>we cordially invite you and your family to grace</span>
+                    <span lang-te class="font-telugu hidden">తామెల్లరు విచ్చేసి నూతన వధూవరులను ఆశీర్వదించ ప్రార్థన</span>
+                </h1>
+                <p class="text-slate-600 italic text-sm sm:text-base font-serif">
+                    <span lang-en>the wedding ceremony of our beloved son</span>
+                    <span lang-te class="font-telugu hidden">మా ఏకైక పుత్రుడి వివాహ శుభముహూర్తమునకు ఆహ్వానము</span>
+                </p>
+            </div>
+
+            <!-- GROOM & BRIDE PROFILE DISPLAY -->
+            <div class="grid grid-cols-1 md:grid-cols-11 gap-6 items-center my-8 py-6 border-y border-gold-500/30">
+                <!-- Groom -->
+                <div class="md:col-span-5 text-center p-5 rounded-2xl bg-amber-50/60 border border-gold-400/40 shadow-inner">
+                    <div class="w-16 h-16 mx-auto mb-3 rounded-full bg-royal-800 text-gold-400 flex items-center justify-center text-2xl shadow-md border border-gold-400">
+                        <i class="fas fa-ring"></i>
+                    </div>
+                    <span class="text-gold-700 text-xs font-bold uppercase tracking-wider">Chi. / చి||</span>
+                    <h2 class="font-title text-2xl sm:text-3xl text-royal-900 font-bold my-1">
+                        Jashwanth Teja
+                    </h2>
+                    <p class="text-slate-700 text-xs sm:text-sm font-medium mt-2 leading-relaxed">
+                        <span lang-en>Son of</span><span lang-te class="font-telugu hidden">మా ఏకైక పుత్రుడు:</span><br>
+                        <strong class="text-maroon-800 text-sm">Smt. R Nirmala</strong><br>
+                        & <strong class="text-maroon-800 text-sm">Dr. R Kiran Raj Kumar</strong>
+                    </p>
+                    <p class="text-slate-500 text-xs mt-1 font-semibold">(Chief Medical Officer, SCCL.)</p>
+                </div>
+
+                <!-- Wed Icon Divider -->
+                <div class="md:col-span-1 text-center py-2">
+                    <span class="font-script text-4xl sm:text-5xl text-gold-600 block">&</span>
+                    <span class="text-xs text-maroon-700 font-bold tracking-widest uppercase">weds</span>
+                </div>
+
+                <!-- Bride -->
+                <div class="md:col-span-5 text-center p-5 rounded-2xl bg-amber-50/60 border border-gold-400/40 shadow-inner">
+                    <div class="w-16 h-16 mx-auto mb-3 rounded-full bg-royal-800 text-gold-400 flex items-center justify-center text-2xl shadow-md border border-gold-400">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <span class="text-gold-700 text-xs font-bold uppercase tracking-wider">Chi. La. Sow. / చి||ల||సౌ||</span>
+                    <h2 class="font-title text-2xl sm:text-3xl text-royal-900 font-bold my-1">
+                        Sindhu
+                    </h2>
+                    <p class="text-slate-700 text-xs sm:text-sm font-medium mt-2 leading-relaxed">
+                        <span lang-en>Younger Daughter of</span><span lang-te class="font-telugu hidden">కనిష్ఠ పుత్రిక:</span><br>
+                        <strong class="text-maroon-800 text-sm">Smt. Ankilla Anuradha</strong><br>
+                        & <strong class="text-maroon-800 text-sm">Late Sri Ankilla Ashok Reddy</strong>
+                    </p>
+                    <p class="text-slate-500 text-xs mt-1 font-semibold">(R/o Hyderabad)</p>
+                </div>
+            </div>
+
+            <!-- EVENT CARDS SECTION -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+
+                <!-- MAIN WEDDING CARD -->
+                <div class="bg-gradient-to-b from-royal-900 via-royal-800 to-royal-900 rounded-2xl p-6 text-white shadow-xl border-2 border-gold-500/70 relative flex flex-col justify-between">
+                    <div class="absolute top-3 right-3 bg-gold-500 text-royal-900 text-[10px] sm:text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                        <span lang-en>Sumuhurtham</span><span lang-te class="font-telugu hidden">సుముహూర్తం</span>
+                    </div>
+
+                    <div>
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 rounded-lg bg-gold-500/20 border border-gold-400 flex items-center justify-center text-gold-400 text-xl">
+                                <i class="fas fa-om"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-serif text-xl text-gold-400 font-bold">
+                                    <span lang-en>Marriage Ceremony</span>
+                                    <span lang-te class="font-telugu hidden">వివాహ మహోత్సవము</span>
+                                </h3>
+                                <p class="text-xs text-gold-200">Dhanur Lagnam • Pushkaramsa</p>
+                            </div>
+                        </div>
+
+                        <!-- Date & Time Box -->
+                        <div class="bg-royal-900/90 rounded-xl p-4 border border-gold-500/40 mb-4 text-center">
+                            <p class="text-gold-400 font-serif text-base font-bold">SUNDAY</p>
+                            <p class="text-3xl font-extrabold text-white my-1">15 <span class="text-base font-normal">NOV 2026</span></p>
+                            <p class="text-gold-300 font-medium text-sm"><i class="far fa-clock mr-1"></i> AT 10:16 A.M.</p>
+                            <p class="text-xs text-slate-300 mt-1 font-telugu">కార్తీక మాస శుద్ధ షష్ఠి • ఉత్తరాషాడ నక్షత్రం</p>
+                        </div>
+
+                        <!-- Venue Details -->
+                        <div class="space-y-2 text-sm text-slate-200 mb-6">
+                            <p class="font-semibold text-gold-300 flex items-start gap-2">
+                                <i class="fas fa-map-marker-alt text-gold-400 mt-1"></i>
+                                <span>Ananthula Ram Reddy Convention</span>
+                            </p>
+                            <p class="text-xs text-slate-300 pl-5 leading-relaxed">
+                                Nagole - Bandlaguda Road, Arunodaya Nagar, Nagole, Hyderabad.
+                            </p>
+                            <div class="mt-2 text-xs bg-amber-500/20 text-amber-300 border border-amber-500/40 px-3 py-1.5 rounded-lg inline-block">
+                                <i class="fas fa-utensils mr-1"></i> Lunch Follows
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="space-y-2 pt-4 border-t border-gold-500/30">
+                        <a href="https://maps.google.com/?q=Ananthula+Ram+Reddy+Convention+Nagole+Hyderabad" target="_blank" rel="noopener" class="w-full bg-gold-500 hover:bg-gold-400 text-royal-900 font-bold py-2.5 px-4 rounded-xl text-xs sm:text-sm flex items-center justify-center gap-2 transition-all shadow-md">
+                            <i class="fas fa-directions"></i> Get Directions (Google Maps)
+                        </a>
+                        <button onclick="addToCalendar('wedding')" class="w-full bg-white/10 hover:bg-white/20 text-gold-300 border border-gold-500/40 font-medium py-2 px-4 rounded-xl text-xs flex items-center justify-center gap-2 transition-all">
+                            <i class="far fa-calendar-plus"></i> Add Wedding to Calendar
+                        </button>
+                    </div>
+                </div>
+
+                <!-- RECEPTION CARD -->
+                <div class="bg-gradient-to-b from-maroon-800 via-royal-900 to-maroon-800 rounded-2xl p-6 text-white shadow-xl border-2 border-gold-500/70 relative flex flex-col justify-between">
+                    <div class="absolute top-3 right-3 bg-gold-500 text-royal-900 text-[10px] sm:text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                        <span lang-en>Reception</span><span lang-te class="font-telugu hidden">రిసెప్షన్</span>
+                    </div>
+
+                    <div>
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 rounded-lg bg-gold-500/20 border border-gold-400 flex items-center justify-center text-gold-400 text-xl">
+                                <i class="fas fa-glass-cheers"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-serif text-xl text-gold-400 font-bold">
+                                    <span lang-en>Grand Reception</span>
+                                    <span lang-te class="font-telugu hidden">రిసెప్షన్ వేడుక</span>
+                                </h3>
+                                <p class="text-xs text-gold-200">Kothagudem Celebration</p>
+                            </div>
+                        </div>
+
+                        <!-- Date & Time Box -->
+                        <div class="bg-royal-900/90 rounded-xl p-4 border border-gold-500/40 mb-4 text-center">
+                            <p class="text-gold-400 font-serif text-base font-bold">SUNDAY</p>
+                            <p class="text-3xl font-extrabold text-white my-1">22 <span class="text-base font-normal">NOV 2026</span></p>
+                            <p class="text-gold-300 font-medium text-sm"><i class="far fa-clock mr-1"></i> FROM 7:00 P.M. ONWARDS</p>
+                        </div>
+
+                        <!-- Venue Details -->
+                        <div class="space-y-2 text-sm text-slate-200 mb-6">
+                            <p class="font-semibold text-gold-300 flex items-start gap-2">
+                                <i class="fas fa-map-marker-alt text-gold-400 mt-1"></i>
+                                <span>Yellandu Club</span>
+                            </p>
+                            <p class="text-xs text-slate-300 pl-5 leading-relaxed">
+                                Kothagudem, Bhadradri Kothagudem District.
+                            </p>
+                            <div class="mt-2 text-xs bg-amber-500/20 text-amber-300 border border-amber-500/40 px-3 py-1.5 rounded-lg inline-block">
+                                <i class="fas fa-glass-cheers mr-1"></i> Dinner & Festivities
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="space-y-2 pt-4 border-t border-gold-500/30">
+                        <a href="https://maps.google.com/?q=Yellandu+Club+Kothagudem" target="_blank" rel="noopener" class="w-full bg-gold-500 hover:bg-gold-400 text-royal-900 font-bold py-2.5 px-4 rounded-xl text-xs sm:text-sm flex items-center justify-center gap-2 transition-all shadow-md">
+                            <i class="fas fa-directions"></i> Get Directions (Google Maps)
+                        </a>
+                        <button onclick="addToCalendar('reception')" class="w-full bg-white/10 hover:bg-white/20 text-gold-300 border border-gold-500/40 font-medium py-2 px-4 rounded-xl text-xs flex items-center justify-center gap-2 transition-all">
+                            <i class="far fa-calendar-plus"></i> Add Reception to Calendar
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- LIVE COUNTDOWN TIMERS SECTION -->
+        <section class="glass-royal rounded-3xl p-6 sm:p-8 border border-gold-500/40 text-center mb-12 shadow-2xl">
+            <h3 class="font-serif text-2xl text-gold-400 font-bold mb-2">
+                <span lang-en>Counting Down To The Wedding Moment</span>
+                <span lang-te class="font-telugu hidden">వివాహ సుముహూర్తమునకు సమయం</span>
+            </h3>
+            <p class="text-gold-200/80 text-xs sm:text-sm mb-6">Sunday, November 15, 2026 @ 10:16 AM IST</p>
+
+            <!-- Countdown Display -->
+            <div id="wedding-timer" class="grid grid-cols-4 gap-2 sm:gap-4 max-w-lg mx-auto">
+                <div class="bg-royal-900/90 border border-gold-500/40 rounded-2xl p-3 sm:p-4 text-center">
+                    <span id="days" class="block font-serif text-2xl sm:text-4xl font-bold text-gold-400">00</span>
+                    <span class="text-[10px] sm:text-xs uppercase tracking-wider text-slate-300">Days</span>
+                </div>
+                <div class="bg-royal-900/90 border border-gold-500/40 rounded-2xl p-3 sm:p-4 text-center">
+                    <span id="hours" class="block font-serif text-2xl sm:text-4xl font-bold text-gold-400">00</span>
+                    <span class="text-[10px] sm:text-xs uppercase tracking-wider text-slate-300">Hours</span>
+                </div>
+                <div class="bg-royal-900/90 border border-gold-500/40 rounded-2xl p-3 sm:p-4 text-center">
+                    <span id="minutes" class="block font-serif text-2xl sm:text-4xl font-bold text-gold-400">00</span>
+                    <span class="text-[10px] sm:text-xs uppercase tracking-wider text-slate-300">Mins</span>
+                </div>
+                <div class="bg-royal-900/90 border border-gold-500/40 rounded-2xl p-3 sm:p-4 text-center">
+                    <span id="seconds" class="block font-serif text-2xl sm:text-4xl font-bold text-gold-400">00</span>
+                    <span class="text-[10px] sm:text-xs uppercase tracking-wider text-slate-300">Secs</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- HOSTS & INVITERS SECTION -->
+        <section class="glass-card rounded-3xl p-6 sm:p-8 border border-gold-500/50 mb-12 shadow-xl">
+            <div class="text-center mb-6">
+                <span class="text-xs font-bold text-gold-700 tracking-widest uppercase">Cordially Invited By</span>
+                <h3 class="font-serif text-2xl text-royal-900 font-bold mt-1">
+                    <span lang-en>Invited By</span>
+                    <span lang-te class="font-telugu hidden">ఆహ్వానించువారు</span>
+                </h3>
+                <div class="w-16 h-0.5 bg-gold-500 mx-auto mt-2"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-center">
+                <div class="bg-amber-50/70 rounded-2xl p-5 border border-gold-300">
+                    <h4 class="font-serif text-lg font-bold text-royal-900">Smt. R Nirmala</h4>
+                    <p class="font-serif text-lg font-bold text-royal-900">& Dr. R Kiran Raj Kumar</p>
+                    <p class="text-xs text-slate-600 font-medium mt-1">Chief Medical Officer, SCCL.</p>
+                    <p class="text-xs text-slate-500 mt-1">MA-21, Bungalows Area, Kothagudem, Bhadradri Kothagudem Dist.</p>
+
+                    <!-- Contact Quick Call -->
+                    <div class="mt-4 flex flex-wrap justify-center gap-2">
+                        <a href="tel:9491145023" class="bg-royal-800 hover:bg-royal-900 text-gold-300 px-3 py-1.5 rounded-full text-xs font-medium flex items-center gap-1.5 transition-all">
+                            <i class="fas fa-phone-alt text-[10px]"></i> 9491145023
+                        </a>
+                        <a href="tel:7989466578" class="bg-royal-800 hover:bg-royal-900 text-gold-300 px-3 py-1.5 rounded-full text-xs font-medium flex items-center gap-1.5 transition-all">
+                            <i class="fas fa-phone-alt text-[10px]"></i> 7989466578
+                        </a>
+                        <a href="tel:9676936491" class="bg-royal-800 hover:bg-royal-900 text-gold-300 px-3 py-1.5 rounded-full text-xs font-medium flex items-center gap-1.5 transition-all">
+                            <i class="fas fa-phone-alt text-[10px]"></i> 9676936491
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-amber-50/70 rounded-2xl p-5 border border-gold-300 flex flex-col justify-center">
+                    <p class="text-xs text-gold-700 font-bold uppercase tracking-wider mb-2"></p>
+                    <h4 class="font-serif text-xl font-bold text-royal-900">We look forward to your esteemed presence and best wishes as the couple begins their beautiful journey together.
+ With warm regards and best wishes
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- INTERACTIVE RSVP & WISHES SECTION -->
+        <section class="glass-royal rounded-3xl p-6 sm:p-8 border border-gold-500/50 text-white shadow-2xl mb-12">
+            <div class="text-center mb-6">
+                <i class="fas fa-envelope-open-text text-3xl text-gold-400 mb-2"></i>
+                <h3 class="font-serif text-2xl text-gold-400 font-bold">
+                    <span lang-en>RSVP & Blessing Wishes</span>
+                    <span lang-te class="font-telugu hidden">మీ శుభాకాంక్షలు తెలియజేయండి</span>
+                </h3>
+                <p class="text-xs sm:text-sm text-slate-300">Please confirm your attendance and leave a blessing message for the couple.</p>
+            </div>
+
+            <!-- RSVP Form -->
+            <form id="rsvpForm" onsubmit="handleRSVP(event)" class="max-w-xl mx-auto space-y-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-medium text-gold-300 mb-1">Your Name *</label>
+                        <input type="text" id="guestName" required placeholder="e.g. Dr. Srinivas Rao" class="w-full bg-royal-900/90 border border-gold-500/40 rounded-xl px-4 py-2.5 text-sm text-white placeholder-slate-400 focus:outline-none focus:border-gold-400">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gold-300 mb-1">Attending Event</label>
+                        <select id="eventAttendance" class="w-full bg-royal-900/90 border border-gold-500/40 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-gold-400">
+                            <option value="Both Events">Both Marriage & Reception</option>
+                            <option value="Marriage Only">Marriage (Nagole, Hyd)</option>
+                            <option value="Reception Only">Reception (Kothagudem)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-medium text-gold-300 mb-1">Number of Guests</label>
+                        <input type="number" id="guestCount" min="1" max="10" value="1" class="w-full bg-royal-900/90 border border-gold-500/40 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-gold-400">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gold-300 mb-1">Phone Number</label>
+                        <input type="tel" id="guestPhone" placeholder="Mobile Number" class="w-full bg-royal-900/90 border border-gold-500/40 rounded-xl px-4 py-2.5 text-sm text-white placeholder-slate-400 focus:outline-none focus:border-gold-400">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-medium text-gold-300 mb-1">Blessings / Warm Message</label>
+                    <textarea id="guestWishes" rows="3" placeholder="Write your heartfelt message for Jashwanth & Sindhu..." class="w-full bg-royal-900/90 border border-gold-500/40 rounded-xl px-4 py-2.5 text-sm text-white placeholder-slate-400 focus:outline-none focus:border-gold-400"></textarea>
+                </div>
+
+                <button type="submit" class="w-full bg-gold-500 hover:bg-gold-400 text-royal-900 font-bold py-3 px-6 rounded-xl shadow-lg transition-all text-sm uppercase tracking-wider">
+                    Send Blessings & Confirm Attendance
+                </button>
+            </form>
+
+            <!-- RSVP Confirmation Box -->
+            <div id="rsvpSuccess" class="hidden mt-6 p-4 bg-emerald-900/80 border border-emerald-500 rounded-xl text-center text-emerald-200 text-sm">
+                <i class="fas fa-check-circle text-2xl text-emerald-400 block mb-1"></i>
+                Thank you! Your blessings and response have been recorded.
+            </div>
+
+            <!-- Guestbook Wishes -->
+            <div class="mt-8 pt-6 border-t border-gold-500/30">
+                <h4 class="text-gold-300 font-serif text-sm font-bold mb-3 text-center">Wishes from Guests</h4>
+                <div id="wishesList" class="space-y-3 max-h-48 overflow-y-auto pr-1">
+                    <!-- Dynamic wishes loaded via JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="text-center text-gold-400/70 text-xs py-6 space-y-1">
+            <p>© 2026 Jashwanth & Sindhu Wedding Invitation.</p>
+            <p>With Warm Regards from Ramapogu & Ankilla Families.</p>
+        </footer>
+
+    </main>
+
+    <!-- YouTube Iframe API Script -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        /* -------------------------------------------------------------
+           1. LANGUAGE SWITCHER (English <-> Telugu)
+        ------------------------------------------------------------- */
+        let currentLang = 'en';
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'en' ? 'te' : 'en';
+            
+            const enElements = document.querySelectorAll('[lang-en]');
+            const teElements = document.querySelectorAll('[lang-te]');
+            const btnText = document.getElementById('langBtnText');
+
+            if (currentLang === 'te') {
+                enElements.forEach(el => el.classList.add('hidden'));
+                teElements.forEach(el => el.classList.remove('hidden'));
+                btnText.innerText = 'English';
+            } else {
+                teElements.forEach(el => el.classList.add('hidden'));
+                enElements.forEach(el => el.classList.remove('hidden'));
+                btnText.innerText = 'తెలుగు';
+            }
+        }
+
+        /* -------------------------------------------------------------
+           2. LIVE COUNTDOWN TIMER (Nov 15, 2026 10:16 AM IST)
+        ------------------------------------------------------------- */
+        const weddingDate = new Date('November 15, 2026 10:16:00').getTime();
+
+        function updateTimer() {
+            const now = new Date().getTime();
+            const difference = weddingDate - now;
+
+            if (difference > 0) {
+                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+                document.getElementById('days').innerText = String(days).padStart(2, '0');
+                document.getElementById('hours').innerText = String(hours).padStart(2, '0');
+                document.getElementById('minutes').innerText = String(minutes).padStart(2, '0');
+                document.getElementById('seconds').innerText = String(seconds).padStart(2, '0');
+            } else {
+                document.getElementById('wedding-timer').innerHTML = `<div class="col-span-4 text-gold-400 font-serif text-xl font-bold py-2">The Wedding Celebration Has Commenced! 🎉</div>`;
+            }
+        }
+        setInterval(updateTimer, 1000);
+        updateTimer();
+
+        /* -------------------------------------------------------------
+           3. ADD TO CALENDAR LINK GENERATOR
+        ------------------------------------------------------------- */
+        function addToCalendar(type) {
+            let title, details, location, startTime, endTime;
+
+            if (type === 'wedding') {
+                title = "Jashwanth & Sindhu's Marriage (Sumuhurtham)";
+                details = "Marriage ceremony of Chi. Jashwanth Teja with Chi. La. Sow. Sindhu. Dhanur Lagnam at 10:16 AM.";
+                location = "Ananthula Ram Reddy Convention, Nagole - Bandlaguda Road, Arunodaya Nagar, Nagole, Hyderabad";
+                startTime = "20261115T044600Z";
+                endTime = "20261115T093000Z";
+            } else {
+                title = "Jashwanth & Sindhu's Grand Reception";
+                details = "Wedding Reception of Jashwanth Teja & Sindhu at Yellandu Club, Kothagudem.";
+                location = "Yellandu Club, Kothagudem, Telangana";
+                startTime = "20261122T133000Z";
+                endTime = "20261122T173000Z";
+            }
+
+            const googleUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${startTime}/${endTime}&details=${encodeURIComponent(details)}&location=${encodeURIComponent(location)}`;
+            window.open(googleUrl, '_blank');
+        }
+
+        /* -------------------------------------------------------------
+           4. CANVAS ANIMATION (Falling Rose Petals & Golden Particles)
+        ------------------------------------------------------------- */
+        const canvas = document.getElementById('petals-canvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        const petals = [];
+        const petalColors = ['#D4AF37', '#E6CA65', '#900C3F', '#C70039', '#FFC300'];
+
+        for (let i = 0; i < 40; i++) {
+            petals.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                size: Math.random() * 8 + 5,
+                speedY: Math.random() * 1.2 + 0.5,
+                speedX: Math.random() * 0.8 - 0.4,
+                angle: Math.random() * 360,
+                spin: Math.random() * 2 - 1,
+                color: petalColors[Math.floor(Math.random() * petalColors.length)]
+            });
+        }
+
+        function animatePetals() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            petals.forEach(p => {
+                p.y += p.speedY;
+                p.x += p.speedX;
+                p.angle += p.spin;
+
+                if (p.y > canvas.height) {
+                    p.y = -10;
+                    p.x = Math.random() * canvas.width;
+                }
+
+                ctx.save();
+                ctx.translate(p.x, p.y);
+                ctx.rotate((p.angle * Math.PI) / 180);
+                ctx.fillStyle = p.color;
+                ctx.globalAlpha = 0.65;
+                ctx.beginPath();
+                ctx.ellipse(0, 0, p.size, p.size / 2, 0, 0, 2 * Math.PI);
+                ctx.fill();
+                ctx.restore();
+            });
+
+            requestAnimationFrame(animatePetals);
+        }
+        animatePetals();
+
+        /* -------------------------------------------------------------
+           5. YOUTUBE API PLAYER - "Jashn-E-Bahaaraa Flute" (-2w18bd-ZQ4)
+        ------------------------------------------------------------- */
+        let ytPlayer = null;
+        let isMusicPlaying = false;
+        const songVideoId = '-2w18bd-ZQ4';
+
+        function onYouTubeIframeAPIReady() {
+            ytPlayer = new YT.Player('youtube-player', {
+                height: '0',
+                width: '0',
+                videoId: songVideoId,
+                playerVars: {
+                    'autoplay': 0,
+                    'controls': 0,
+                    'loop': 1,
+                    'playlist': songVideoId,
+                    'playsinline': 1
+                },
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+            ytPlayer.setLoop(true);
+        }
+
+        function onPlayerStateChange(event) {
+            if (event.data === YT.PlayerState.PLAYING) {
+                isMusicPlaying = true;
+                updateMusicUI(true);
+            } else if (event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.ENDED) {
+                isMusicPlaying = false;
+                updateMusicUI(false);
+            }
+        }
+
+        function enterInvitation() {
+            const overlay = document.getElementById('welcomeOverlay');
+            overlay.style.opacity = '0';
+            setTimeout(() => {
+                overlay.style.display = 'none';
+            }, 700);
+
+            if (ytPlayer && typeof ytPlayer.playVideo === 'function') {
+                ytPlayer.playVideo();
+            }
+        }
+
+        function toggleMusic() {
+            if (!ytPlayer || typeof ytPlayer.playVideo !== 'function') return;
+
+            if (isMusicPlaying) {
+                ytPlayer.pauseVideo();
+            } else {
+                ytPlayer.playVideo();
+            }
+        }
+
+        function updateMusicUI(playing) {
+            const musicIcon = document.getElementById('musicIcon');
+            const musicText = document.getElementById('musicText');
+
+            if (playing) {
+                musicIcon.className = "fas fa-volume-up text-royal-900";
+                if (musicText) musicText.innerText = "Jashn-E-Bahaaraa Flute 🎵";
+            } else {
+                musicIcon.className = "fas fa-music text-gold-400";
+                if (musicText) musicText.innerText = "Play Flute Music 🎵";
+            }
+        }
+
+        /* -------------------------------------------------------------
+           6. RSVP & WISHES LOCALSTORAGE GUESTBOOK
+        ------------------------------------------------------------- */
+        const sampleWishes = [
+            { name: "Srinivas Rao & Family", msg: "Wishing Jashwanth and Sindhu a joyful union and divine blessings forever!", time: "2 hours ago" },
+            { name: "Dr. K. Anjaneyulu", msg: "Hearty congratulations to Nirmala garu & Kiran Raj Kumar garu. Best wishes to the newly weds!", time: "1 day ago" }
+        ];
+
+        function loadWishes() {
+            const wishesList = document.getElementById('wishesList');
+            const savedWishes = JSON.parse(localStorage.getItem('jashwanth_wedding_wishes') || '[]');
+            const allWishes = [...savedWishes, ...sampleWishes];
+
+            wishesList.innerHTML = allWishes.map(item => `
+                <div class="bg-royal-900/80 border border-gold-500/20 rounded-xl p-3 text-xs">
+                    <div class="flex justify-between items-center text-gold-400 font-bold mb-1">
+                        <span>${escapeHtml(item.name)}</span>
+                        <span class="text-[10px] text-slate-400 font-normal">${item.time || 'Recently'}</span>
+                    </div>
+                    <p class="text-slate-200 italic">"${escapeHtml(item.msg)}"</p>
+                </div>
+            `).join('');
+        }
+
+        function handleRSVP(event) {
+            event.preventDefault();
+            const name = document.getElementById('guestName').value;
+            const wishes = document.getElementById('guestWishes').value;
+
+            if (wishes.trim()) {
+                const savedWishes = JSON.parse(localStorage.getItem('jashwanth_wedding_wishes') || '[]');
+                savedWishes.unshift({ name: name, msg: wishes, time: 'Just now' });
+                localStorage.setItem('jashwanth_wedding_wishes', JSON.stringify(savedWishes));
+                loadWishes();
+            }
+
+            document.getElementById('rsvpSuccess').classList.remove('hidden');
+            document.getElementById('rsvpForm').reset();
+
+            setTimeout(() => {
+                document.getElementById('rsvpSuccess').classList.add('hidden');
+            }, 6000);
+        }
+
+        function escapeHtml(str) {
+            return str.replace(/[&<>"']/g, function(m) {
+                return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m];
+            });
+        }
+
+        window.onload = function() {
+            loadWishes();
+        };
+    </script>
+</body>
+</html>
